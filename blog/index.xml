@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog-rsses on Tyler Clavelle</title>
+    <link>https://tclavelle.github.io/blog/index.xml</link>
+    <description>Recent content in Blog-rsses on Tyler Clavelle</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy;2016 Tyler Clavelle</copyright>
+    <lastBuildDate>Fri, 20 Jan 2017 18:32:56 -0800</lastBuildDate>
+    <atom:link href="https://tclavelle.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>welcome</title>
+      <link>https://tclavelle.github.io/blog/welcome/</link>
+      <pubDate>Fri, 20 Jan 2017 18:32:56 -0800</pubDate>
+      
+      <guid>https://tclavelle.github.io/blog/welcome/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;Hello world!&lt;/p&gt;
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
