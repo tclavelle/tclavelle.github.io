@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Building a Blog with Blogdown and GitHub</title>
+<meta name="description" content="Describe your website">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" href="https://tclavelle.github.io/css/bootstrap.min.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+<link rel="stylesheet" href="https://tclavelle.github.io/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://tclavelle.github.io/css/owl.carousel.css">
+<link rel="stylesheet" href="https://tclavelle.github.io/css/owl.theme.css">
+
+
+  <link href="https://tclavelle.github.io/css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
+
+
+<link href="https://tclavelle.github.io/css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="https://tclavelle.github.io/img/favicon.png">
+
+
+
+
+
+
+</head>
+<body>
+  <div id="all">
+      <div class="container-fluid">
+          <div class="row row-offcanvas row-offcanvas-left">
+              <div id="sidebar" class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+  <div class="sidebar-content">
+    <h1 class="sidebar-heading"><a href="/">Tyler Clavelle</a></h1>
+    
+      <p class="sidebar-p">My name is Tyler Clavelle and i'm an environmental data scientist interested in using data analysis and visualization to elucidate the diverse ecological, economic, and social challenges facing our planet. I work as a Project Researcher for the Sustainable Fisheries Group at the University of California, Santa Barbara.</p>
+    
+    <ul class="sidebar-menu">
+      
+      
+        <li><a href="https://tclavelle.github.io/">Home</a></li>
+      
+        <li><a href="https://tclavelle.github.io/about/">About</a></li>
+      
+        <li><a href="https://tclavelle.github.io/blog/">Blog</a></li>
+      
+        <li><a href="https://tclavelle.github.io/contact/">Get in touch</a></li>
+      
+    </ul>
+    <p class="social">
+  
+  
+  
+  <a href="https://twitter.com/TylerSaville" data-animate-hover="pulse" class="external twitter">
+    <i class="fa fa-twitter"></i>
+  </a>
+  
+  
+  
+  <a href="mailto:tyler.clavelle@gmail.com" data-animate-hover="pulse" class="email">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  <a href="https://linkedin.com/in/tyler-clavelle-b9902716" data-animate-hover="pulse">
+    <i class="fa fa-linkedin"></i>
+  </a>
+  
+  
+  
+  <a href="https://github.com/tclavelle" data-animate-hover="pulse">
+    <i class="fa fa-github"></i>
+  </a>
+  
+</p>
+
+
+    <div class="copyright">
+      <p class="credit">
+        
+          &copy;2016 Tyler Clavelle
+        
+        | Template by <a href="https://bootstrapious.com/free-templates" class="external">Bootstrapious.com</a>
+
+&amp; ported to Hugo by <a href="https://github.com/kishaningithub">Kishan B</a>
+
+      </p>
+    </div>
+  </div>
+</div>
+
+              
+<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
+  <div class="small-navbar visible-xs">
+  <button type="button" data-toggle="offcanvas" class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
+  <h1 class="small-navbar-heading"><a href="/">Tyler Clavelle</a></h1>
+</div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="content-column-content">
+         <h1>Building a Blog with Blogdown and GitHub</h1>
+
+
+<p>When I first started learning to code in R, Google was (and still is) my go-to when I had a question. It didn’t take long to realize that this generally brought me to one of two destinations - StackOverflow or [Insert Name]’s Blog. So, I created a StackOverflow account and decided to start my own data science blog. However, I didn’t quite know where to start and spent most of 2016 scoping different platforms. While I won’t go into all the details of this process, the cliff notes are as follows:</p>
+<ul>
+<li>Tried Jekyll. The installation and dependencies (e.g. Ruby) were more complicated than I wanted and I was hoping for a more direct integration of R into the workflow</li>
+<li>Created a website with RMarkdown. Getting setup was a breeze but found the blogging capability to be lacking</li>
+</ul>
+<p>Enter <a href="https://github.com/rstudio/blogdown">blogdown</a>, the new brainchild of Yihui Xi. Though still in the early beta stage, blogdown checked all the boxes I was looking for. So, now that i’m up and running, it felt only natural to write my first blog post about how to get started blogging with <code>blogdown</code>. <a href="https://github.com/rstudio/blogdown">Blogdown</a> is a R package that combines the ease of <a href="http://rmarkdown.rstudio.com">RMarkdown</a> with the flexibility and customizability of <a href="https://gohugo.io">Hugo</a>. Hugo is an open-source static site generator similar to Jekyll, which means it builds your website once rather than each time a user visits it by taking all files within the website’s directory and rendering a complete website.</p>
+<div id="hosting-your-blog-with-github" class="section level2">
+<h2>Hosting Your Blog With GitHub</h2>
+<p>Before I jump in to explaining how to use <code>blogdown</code>, I want to first explain my approach to hosting my blog on GitHub, as it is important for the remainder of this post. User pages on GitHub require all site content (and only site content) to be on the <code>master</code> branch. This is problematic for <code>blogdown</code> sites because when Hugo builds your website it places the site conent in a new folder called <code>public/</code>. Thus, your blog’s source and site content will be on the <code>master</code> branch and GitHub will be unable to render your site. So far i’ve seen two options for getting around this issue:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Two branches (and a subbranch) -</strong> Remove all source content from the <code>master</code> branch and place it in a new branch, using a <code>subbranch</code> to mirror the <code>public/</code> folder on the new branch to the <code>master</code> branch. While this method allows you to store all your content in the same repo, it’s rather confusing to set up if you’re not a GitHub ninja.</p></li>
+<li><p><strong>Two repositories -</strong> Create a repo to store your source content and tell <code>blogdown</code> to publish the site to your <code>username.github.io</code> repository each time you build your site. Though this approach is less streamlined than the two-branch method, the only real added hassle is remembering to push an additional repository to GitHub.</p></li>
+</ol>
+<p>After initial partly-successful attempts to use the two-branch method, I decided to keep it simple and use the two repository method for my site. If you decide to go the two-branch route, see <a href="https://proquestionasker.github.io/blog/Making_Site/">this</a> great post by Amber Thomas (which was my primary resource) and <a href="https://hjdskes.github.io/blog/deploying-hugo-on-personal-gh-pages/index.html">this</a> post by Jente Hidskes.</p>
+</div>
+<div id="creating-your-blog" class="section level2">
+<h2>Creating Your Blog</h2>
+<p>Ok, now that we’ve decided to use the two repository method to host our site, let’s get started making a blog with <code>blogdown</code>.</p>
+<div id="create-a-github-repository" class="section level3">
+<h3>Create a GitHub Repository</h3>
+<p>First, create a new repository for your blogdown source content. Initialize the repository with a <code>README.md</code> file.</p>
+<p><img src="img/create_repo.png" width="676" style="display: block; margin: auto;" /></p>
+<p>Next, click the green <code>clone or download</code> button on the right side of your new repo’s page and copy the URL.</p>
+<p><img src="img/clone_repo.png" width="515" style="display: block; margin: auto;" /></p>
+<p>Open up Terminal and use <code>cd &lt;desired directory&gt;</code> to navigate to the directory where you’d like your new repository to live. I keep all my repos in a <code>GitHub/</code> folder on my desktop, so i’ll put the repository there. After navigating to the desired directory, run <code>git clone &lt;GitHub URL&gt;</code> to clone the new repository.</p>
+<p><img src="img/terminal_clone.png" width="285" style="display: block; margin: auto;" /></p>
+<p>Open up <em>Finder</em>; you should now see the <code>blogdown_source/</code> folder containing only the <code>README.md</code> file. Now that you’ve successfully cloned the repo, delete the <code>README.md</code> file. Don’t add anything else to this folder just yet, we’ll let <code>blogdown</code> handle that part.</p>
+</div>
+<div id="installing-hugo" class="section level3">
+<h3>Installing Hugo</h3>
+<p>A great feature of <code>blogdown</code> is that it handles the installation of Hugo for you, which means you don’t need to know much about Hugo to start blogging with <code>blogdown</code>. I found this to be a big advantage over the complicated dependencies and installation process of Jekyll.</p>
+<pre class="r"><code># Load blogdown package and install Hugo
+library(blogdown)
+install_hugo()</code></pre>
+</div>
+<div id="build-your-site-with-blogdown" class="section level3">
+<h3>Build Your Site with Blogdown</h3>
+<p>Like <code>install_hugo</code>, blogdown provides the handy <code>new_site()</code> function to automatically create the required structure for you website in the directory you specify. Another great feature of this function is that you can use the <code>theme</code> argument to specify the theme you want for your website and <code>blogdown</code> will download all neccessary files into the new site directory it creates. Check out Hugo’s <a href="http://themes.gohugo.io">theme</a> gallery for a ton of options. Let’s try the <a href="http://themes.gohugo.io/hugo-tranquilpeak-theme/">Tranquilpeak theme</a> theme, which we specify with <code>theme = 'kakawait/hugo-tranquilpeak-theme'</code>, which is just the GitHub user and repo name for the theme. We’ll also set the <code>format</code> argument to <code>format = 'toml'</code> to tell <code>blogdown</code> that we want to use <strong>toml</strong> for our site’s <code>config</code> file. <code>toml</code> is actually the default setting but I wanted to point it out because the <code>config.toml</code> is important for customizing your website. More on this in a bit.</p>
+<pre class="r"><code># Create new site in our recently cloned blogdown repository
+new_site(dir = &#39;blogdown_source&#39;, 
+         theme = &#39;kakawait/hugo-tranquilpeak-theme&#39;,
+         format = &#39;toml&#39;)</code></pre>
+<p>A few things happen upon running the above code. R will add all the required Hugo components to the previously empty directory, displaying the progress in your R console. An example RMarkdown <code>post</code> will open automatically and RStudio will start serving your site in the RStudio Viewer, which you can open in your web browser by clicking on the arrow button next to the broom.</p>
+<p><img src="img/new_site_console.png" width="513" style="display: block; margin: auto;" /></p>
+<p>Congratulations! You now have a functioning website created with <code>blogdown</code>! However, before you start going crazy customizing your new site and writing blog posts, let’s first understand a bit more about how <strong>Hugo</strong> and <code>blogdown</code> work together to organize and build your site.</p>
+</div>
+</div>
+<div id="site-structure" class="section level2">
+<h2>Site Structure</h2>
+<p>Open up your repository folder. You should see a bunch of new folders and files, including for the theme you told <code>blogdown</code> to use for your website.</p>
+<p><img src="img/repo_structure.png" width="406" style="display: block; margin: auto;" /></p>
+<p>While you should definitely see <a href="https://gohugo.io/overview/source-directory/">Hugo’s documentation</a> for details on the purpose of these directories, i’ll explain the key elements you need to understand to get started with <code>blogdown</code>.</p>
+<ul>
+<li><a href="https://gohugo.io/overview/configuration/">config.toml</a> - The configuration file for your website. This file tells Hugo how it should render your site, as well as define its menus, and set various other site-wide parameters.</li>
+<li><a href="https://gohugo.io/themes/overview/">themes</a> - User generated themes powered by the Go template library. You should see a folder with the name of the theme you chose previously</li>
+<li><a href="https://gohugo.io/content/organization/">content/</a> - The main directory where your blog’s content will live. Each page of your site should exist as a subdirectory of <code>content/</code>. Each subdirectory will consist of either a single <code>index.md</code> (or <code>index.html</code>) file, or a series of files representing multiple posts of the same content type<br />
+</li>
+<li><a href="https://gohugo.io/templates/overview/">layout/</a> - HTML templates that Hugo uses to structure the layout of each page on your website. There are three primary layouts - <strong>single</strong> (for single-content pages), <strong>list</strong> (for pages with multiple pieces of content), and <strong>homepage</strong> (self explanatory).<br />
+</li>
+<li><code>public/</code> - The directory where Hugo will place your rendered website. The contents of the <code>public/</code> directory are the only things that can be present on the <code>master</code> branch of your <em>username.github.io</em> page in order for GitHub to render the site properly. More on this in a bit.</li>
+</ul>
+<p>Once you’ve installed Hugo and created a new site, you’re ready to start customizing your site and adding content with <code>blogdown</code>!</p>
+</div>
+<div id="creating-new-content" class="section level2">
+<h2>Creating New Content</h2>
+</div>
+
+
+
+         <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'tclavelle';
+    var disqus_identifier = 'https:\/\/tclavelle.github.io\/blog\/blogdown_github\/';
+    var disqus_title = 'Building a Blog with Blogdown and GitHub';
+    var disqus_url = 'https:\/\/tclavelle.github.io\/blog\/blogdown_github\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+      </div>
+  </div>
+  <script src="https://tclavelle.github.io/js/jquery.min.js"></script>
+<script src="https://tclavelle.github.io/js/bootstrap.min.js"></script>
+<script src="https://tclavelle.github.io/js/jquery.cookie.js"> </script>
+<script src="https://tclavelle.github.io/js/ekko-lightbox.js"></script>
+<script src="https://tclavelle.github.io/js/jquery.scrollTo.min.js"></script>
+<script src="https://tclavelle.github.io/js/masonry.pkgd.min.js"></script>
+<script src="https://tclavelle.github.io/js/imagesloaded.pkgd.min.js"></script>
+<script src="https://tclavelle.github.io/js/owl.carousel.min.js"></script>
+<script src="https://tclavelle.github.io/js/front.js"></script>
+
+</body>
+</html>

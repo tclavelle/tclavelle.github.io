@@ -1,8 +1,12 @@
 ---
 date: 2017-01-20T18:32:56-08:00
-title: welcome
+title: "Welcome"
 author: Tyler Clavelle
 type: "post"
+draft: false
+image: "blog/img/TyTy_Diving_Conch.jpg"
 ---
 
-Hello world!
+Well, I finally did it. I started a blog. 
+
+Getting this site off the drawing board was, like a lot of things in 2016, a bit of a struggle. However, the reason for the slow launch was because, unlike 2016, there were just too many great options to choose from.  

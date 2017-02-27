@@ -1,0 +1,60 @@
+---
+date: 2017-01-22T15:09:40-08:00
+title: "Donald Ducking Trump"
+type: "post"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+```{r trump, echo=FALSE}
+## Load libraries
+library(tidyverse)
+library(tidytext)
+library(wordcloud2)
+library(lubridate)
+library(webshot)
+library(htmlwidgets)
+
+## Load debate data
+pres <- read_csv(file = 'data/debate.csv')
+prime <- read_csv(file = 'data/primary_debates_cleaned.csv')
+
+# Trump
+trump <- pres %>%
+  filter(Speaker == 'Trump') %>%
+  select(Speaker, Date, Line, Text) %>%
+  mutate(Debate = 'Presidential') %>%
+  # bind_rows(prime %>%
+  #             filter(Speaker == 'Trump') %>%
+  #             select(Speaker, Date, Line, Text) %>%
+  #             mutate(Debate = 'Primary')) %>%
+  select(Text, Date, Debate) %>%
+  mutate(Date = mdy(Date))
+  
+trump_tidy <- trump %>%
+  unnest_tokens(word, Text) %>%
+  anti_join(stop_words)
+
+trump_tidy_wc <- trump_tidy %>%
+  count(word, sort = T) %>%
+  filter(grepl('[[:digit:]]', word)==F) %>%
+  rename(freq = n)
+```
+
+Seriously, wtf.
+
+```{r trump_cloud, echo=FALSE}
+## Trump word cloud
+figPath = system.file("examples/gop.png",package = "wordcloud2")
+
+trump_cloud <- wordcloud2(data = trump_tidy_wc, color = rep(c('red','black'),times = 750), figPath = figPath, shuffle = F, size = .85, gridSize = 4, backgroundColor = 'white')
+
+```
+
+```{r cloud, results='asis', echo=FALSE}
+trump_cloud
+```
+
