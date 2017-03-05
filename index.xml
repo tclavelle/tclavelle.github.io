@@ -28,7 +28,7 @@
 &lt;p&gt;Enter &lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown&lt;/a&gt;, the new brainchild of Yihui Xi. Though still in the early beta stage, blogdown checked all the boxes I was looking for. So, now that i’m up and running, it felt only natural to write my first blog post about how to get started blogging with &lt;code&gt;blogdown&lt;/code&gt;. &lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;Blogdown&lt;/a&gt; is a R package that combines the ease of &lt;a href=&#34;http://rmarkdown.rstudio.com&#34;&gt;RMarkdown&lt;/a&gt; with the flexibility and customizability of &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt;. Hugo is an open-source static site generator similar to Jekyll, which means it builds your website once rather than each time a user visits it by taking all files within the website’s directory and rendering a complete website.&lt;/p&gt;
 &lt;div id=&#34;hosting-your-blog-with-github&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Hosting Your Blog With GitHub&lt;/h2&gt;
-&lt;p&gt;Before I jump in to explaining how to use &lt;code&gt;blogdown&lt;/code&gt;, I want to first explain my approach to hosting my blog on GitHub, as it is important for the remainder of this post. User pages on GitHub require all site content (and only site content) to be on the &lt;code&gt;master&lt;/code&gt; branch. This is problematic for &lt;code&gt;blogdown&lt;/code&gt; sites because when Hugo builds your website it places the site conent in a new folder called &lt;code&gt;public/&lt;/code&gt;. Thus, your blog’s source and site content will be on the &lt;code&gt;master&lt;/code&gt; branch and GitHub will be unable to render your site. So far i’ve seen two options for getting around this issue:&lt;/p&gt;
+&lt;p&gt;Before I jump in to explaining how to use &lt;code&gt;blogdown&lt;/code&gt;, I want to first explain my approach to hosting my blog on GitHub, as it is important for the remainder of this post. User pages on GitHub require all site content (and only site content) to be on the &lt;code&gt;master&lt;/code&gt; branch. This is problematic for &lt;code&gt;blogdown&lt;/code&gt; sites because when Hugo builds your website it places the site content in a new folder called &lt;code&gt;public/&lt;/code&gt;. Thus, your blog’s source and site content will be on the &lt;code&gt;master&lt;/code&gt; branch and GitHub will be unable to render your site. So far I’ve seen two options for getting around this issue:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Two branches (and a subbranch) -&lt;/strong&gt; Remove all source content from the &lt;code&gt;master&lt;/code&gt; branch and place it in a new branch, using a &lt;code&gt;subbranch&lt;/code&gt; to mirror the &lt;code&gt;public/&lt;/code&gt; folder on the new branch to the &lt;code&gt;master&lt;/code&gt; branch. While this method allows you to store all your content in the same repo, it’s rather confusing to set up if you’re not a GitHub ninja.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Two repositories -&lt;/strong&gt; Create a repo to store your source content and tell &lt;code&gt;blogdown&lt;/code&gt; to publish the site to your &lt;code&gt;username.github.io&lt;/code&gt; repository each time you build your site. Though this approach is less streamlined than the two-branch method, the only real added hassle is remembering to push an additional repository to GitHub.&lt;/p&gt;&lt;/li&gt;
@@ -40,51 +40,97 @@
 &lt;p&gt;Ok, now that we’ve decided to use the two repository method to host our site, let’s get started making a blog with &lt;code&gt;blogdown&lt;/code&gt;.&lt;/p&gt;
 &lt;div id=&#34;create-a-github-repository&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Create a GitHub Repository&lt;/h3&gt;
-&lt;p&gt;First, create a new repository for your blogdown source content. Initialize the repository with a &lt;code&gt;README.md&lt;/code&gt; file.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;img/create_repo.png&#34; width=&#34;676&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Next, click the green &lt;code&gt;clone or download&lt;/code&gt; button on the right side of your new repo’s page and copy the URL.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;img/clone_repo.png&#34; width=&#34;515&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Open up Terminal and use &lt;code&gt;cd &amp;lt;desired directory&amp;gt;&lt;/code&gt; to navigate to the directory where you’d like your new repository to live. I keep all my repos in a &lt;code&gt;GitHub/&lt;/code&gt; folder on my desktop, so i’ll put the repository there. After navigating to the desired directory, run &lt;code&gt;git clone &amp;lt;GitHub URL&amp;gt;&lt;/code&gt; to clone the new repository.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;img/terminal_clone.png&#34; width=&#34;285&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Open up &lt;em&gt;Finder&lt;/em&gt;; you should now see the &lt;code&gt;blogdown_source/&lt;/code&gt; folder containing only the &lt;code&gt;README.md&lt;/code&gt; file. Now that you’ve successfully cloned the repo, delete the &lt;code&gt;README.md&lt;/code&gt; file. Don’t add anything else to this folder just yet, we’ll let &lt;code&gt;blogdown&lt;/code&gt; handle that part.&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;First, create a new repository for your blogdown source content. Initialize the repository with a &lt;code&gt;README.md&lt;/code&gt; file.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;../img/create_repo.png&#34; width=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Next, click the green &lt;code&gt;clone or download&lt;/code&gt; button on the right side of your new repo’s page and copy the URL.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;../img/clone_repo.png&#34; width=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Open up Terminal and use &lt;code&gt;cd &amp;lt;desired directory&amp;gt;&lt;/code&gt; to navigate to the directory where you’d like your new repository to live. I keep all my repos in a &lt;code&gt;GitHub/&lt;/code&gt; folder on my desktop, so I’ll put the repository there. After navigating to the desired directory, run &lt;code&gt;git clone &amp;lt;GitHub URL&amp;gt;&lt;/code&gt; to clone the new repository.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;../img/terminal_clone.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;ol start=&#34;4&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;p&gt;Open up &lt;em&gt;Finder&lt;/em&gt;; you should now see the &lt;code&gt;blogdown_source/&lt;/code&gt; folder containing only the &lt;code&gt;README.md&lt;/code&gt; file. Now that you’ve successfully cloned the repo, delete the &lt;code&gt;README.md&lt;/code&gt; file. Don’t add anything else to this folder just yet, &lt;code&gt;blogdown&lt;/code&gt; requires an empty directory to get started.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;If you don’t already have a repository setup for your &lt;strong&gt;&lt;username&gt;.github.io&lt;/strong&gt; page, repeat steps 1-3 above and create that repo now as well. Later on in the setup process we’ll tell Hugo to publish our new site to this directory.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
 &lt;/div&gt;
 &lt;div id=&#34;installing-hugo&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Installing Hugo&lt;/h3&gt;
 &lt;p&gt;A great feature of &lt;code&gt;blogdown&lt;/code&gt; is that it handles the installation of Hugo for you, which means you don’t need to know much about Hugo to start blogging with &lt;code&gt;blogdown&lt;/code&gt;. I found this to be a big advantage over the complicated dependencies and installation process of Jekyll.&lt;/p&gt;
+&lt;ol start=&#34;6&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Load the &lt;code&gt;blogdown&lt;/code&gt; package and run the &lt;code&gt;install_hugo()&lt;/code&gt; command. This can just be done in the console.&lt;/li&gt;
+&lt;/ol&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Load blogdown package and install Hugo
 library(blogdown)
 install_hugo()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Doesn’t get much more straight forward than that.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;build-your-site-with-blogdown&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Build Your Site with Blogdown&lt;/h3&gt;
-&lt;p&gt;Like &lt;code&gt;install_hugo&lt;/code&gt;, blogdown provides the handy &lt;code&gt;new_site()&lt;/code&gt; function to automatically create the required structure for you website in the directory you specify. Another great feature of this function is that you can use the &lt;code&gt;theme&lt;/code&gt; argument to specify the theme you want for your website and &lt;code&gt;blogdown&lt;/code&gt; will download all neccessary files into the new site directory it creates. Check out Hugo’s &lt;a href=&#34;http://themes.gohugo.io&#34;&gt;theme&lt;/a&gt; gallery for a ton of options. Let’s try the &lt;a href=&#34;http://themes.gohugo.io/hugo-tranquilpeak-theme/&#34;&gt;Tranquilpeak theme&lt;/a&gt; theme, which we specify with &lt;code&gt;theme = &#39;kakawait/hugo-tranquilpeak-theme&#39;&lt;/code&gt;, which is just the GitHub user and repo name for the theme. We’ll also set the &lt;code&gt;format&lt;/code&gt; argument to &lt;code&gt;format = &#39;toml&#39;&lt;/code&gt; to tell &lt;code&gt;blogdown&lt;/code&gt; that we want to use &lt;strong&gt;toml&lt;/strong&gt; for our site’s &lt;code&gt;config&lt;/code&gt; file. &lt;code&gt;toml&lt;/code&gt; is actually the default setting but I wanted to point it out because the &lt;code&gt;config.toml&lt;/code&gt; is important for customizing your website. More on this in a bit.&lt;/p&gt;
+&lt;p&gt;Like &lt;code&gt;install_hugo()&lt;/code&gt;, blogdown provides the handy &lt;code&gt;new_site()&lt;/code&gt; function to automatically create the required structure for you website in the (empty) directory you specify.&lt;/p&gt;
+&lt;p&gt;Another great feature of this function is that you can use the &lt;code&gt;theme&lt;/code&gt; argument to specify the theme you want for your website and &lt;code&gt;blogdown&lt;/code&gt; will download all necessary files into the new site directory it creates. Check out Hugo’s &lt;a href=&#34;http://themes.gohugo.io&#34;&gt;theme&lt;/a&gt; gallery for a ton of options. Let’s try the &lt;a href=&#34;http://themes.gohugo.io/hugo-tranquilpeak-theme/&#34;&gt;Tranquilpeak theme&lt;/a&gt; theme, which we specify with &lt;code&gt;theme = &#39;kakawait/hugo-tranquilpeak-theme&#39;&lt;/code&gt;, which is just the GitHub user and repo name for the theme. We’ll also set the &lt;code&gt;format&lt;/code&gt; argument to &lt;code&gt;format = &#39;toml&#39;&lt;/code&gt; to tell &lt;code&gt;blogdown&lt;/code&gt; that we want to use &lt;strong&gt;toml&lt;/strong&gt; for our site’s &lt;code&gt;config&lt;/code&gt; file. &lt;code&gt;toml&lt;/code&gt; is actually the default setting but I wanted to point it out because the &lt;code&gt;config.toml&lt;/code&gt; is important for customizing your website. Once you select a theme for your site, checkout the GitHub repo for the theme and determine whether the &lt;code&gt;theme&lt;/code&gt; file is a &lt;code&gt;.toml&lt;/code&gt; or &lt;code&gt;.yaml&lt;/code&gt; file and set the &lt;code&gt;format&lt;/code&gt; argument accordingly.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create new site in our recently cloned blogdown repository
 new_site(dir = &amp;#39;blogdown_source&amp;#39;, 
          theme = &amp;#39;kakawait/hugo-tranquilpeak-theme&amp;#39;,
          format = &amp;#39;toml&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;A few things happen upon running the above code. R will add all the required Hugo components to the previously empty directory, displaying the progress in your R console. An example RMarkdown &lt;code&gt;post&lt;/code&gt; will open automatically and RStudio will start serving your site in the RStudio Viewer, which you can open in your web browser by clicking on the arrow button next to the broom.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;img/new_site_console.png&#34; width=&#34;513&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Congratulations! You now have a functioning website created with &lt;code&gt;blogdown&lt;/code&gt;! However, before you start going crazy customizing your new site and writing blog posts, let’s first understand a bit more about how &lt;strong&gt;Hugo&lt;/strong&gt; and &lt;code&gt;blogdown&lt;/code&gt; work together to organize and build your site.&lt;/p&gt;
+&lt;p&gt;A few things happen upon running the above code:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;blogdown&lt;/code&gt; will add all the required Hugo components to the previously empty directory, displaying the progress in your R console&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;An example RMarkdown &lt;code&gt;post&lt;/code&gt; will be created and opened automatically&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;RStudio will start serving your site in the RStudio viewer, which you can open in your web browser by clicking on the arrow button next to the broom&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;../img/new_site_serve.png&#34; width=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Congratulations! You now have a functioning website created with &lt;code&gt;blogdown&lt;/code&gt;! However, before you’re ready to publish your site and start and writing blog posts, let’s first understand a bit more about how Hugo and &lt;code&gt;blogdown&lt;/code&gt; work together to organize and build your site.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;site-structure&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Site Structure&lt;/h2&gt;
-&lt;p&gt;Open up your repository folder. You should see a bunch of new folders and files, including for the theme you told &lt;code&gt;blogdown&lt;/code&gt; to use for your website.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;img/repo_structure.png&#34; width=&#34;406&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;While you should definitely see &lt;a href=&#34;https://gohugo.io/overview/source-directory/&#34;&gt;Hugo’s documentation&lt;/a&gt; for details on the purpose of these directories, i’ll explain the key elements you need to understand to get started with &lt;code&gt;blogdown&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Open up your repository folder. You should see a bunch of new folders and files, including for the theme you told &lt;code&gt;blogdown&lt;/code&gt; to use for your website and the demo RMarkdown post in the &lt;code&gt;blogdown/post/&lt;/code&gt; directory.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../img/repo_structure.png&#34; width=&#34;80%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;While you should definitely see &lt;a href=&#34;https://gohugo.io/overview/source-directory/&#34;&gt;Hugo’s documentation&lt;/a&gt; for details on the purpose of these directories, I’ll explain the key elements you need to understand to get started with &lt;code&gt;blogdown&lt;/code&gt;.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://gohugo.io/overview/configuration/&#34;&gt;config.toml&lt;/a&gt; - The configuration file for your website. This file tells Hugo how it should render your site, as well as define its menus, and set various other site-wide parameters.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://gohugo.io/themes/overview/&#34;&gt;themes&lt;/a&gt; - User generated themes powered by the Go template library. You should see a folder with the name of the theme you chose previously&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://gohugo.io/content/organization/&#34;&gt;content/&lt;/a&gt; - The main directory where your blog’s content will live. Each page of your site should exist as a subdirectory of &lt;code&gt;content/&lt;/code&gt;. Each subdirectory will consist of either a single &lt;code&gt;index.md&lt;/code&gt; (or &lt;code&gt;index.html&lt;/code&gt;) file, or a series of files representing multiple posts of the same content type&lt;br /&gt;
+&lt;li&gt;&lt;a href=&#34;https://gohugo.io/overview/configuration/&#34;&gt;config.toml&lt;/a&gt; - The configuration file for your website. This file tells Hugo how it should render your site, as well as define its menus, and set various other site-wide parameters. This file will look different for every theme, but they will all contain some basic components.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;baseurl&lt;/code&gt; set this to the desired URL for your site, in this case &lt;code&gt;baseurl = &amp;quot;https://&amp;lt;usernamr&amp;gt;.github.io/&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;title&lt;/code&gt; set the title for your new site. Some completely random and objective examples include “Real Leaks, Fake News”, “Gravy Fries and Putin”, and “Kellyanne’s Alternative Factory”&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;description&lt;/code&gt; a brief description or mission of your new site, something like “Democracy Described in Data” or “Hair and Imbalanced”&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;theme&lt;/code&gt; this should list the theme you specified when creating the site&lt;br /&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://gohugo.io/templates/overview/&#34;&gt;layout/&lt;/a&gt; - HTML templates that Hugo uses to structure the layout of each page on your website. There are three primary layouts - &lt;strong&gt;single&lt;/strong&gt; (for single-content pages), &lt;strong&gt;list&lt;/strong&gt; (for pages with multiple pieces of content), and &lt;strong&gt;homepage&lt;/strong&gt; (self explanatory).&lt;br /&gt;
+&lt;li&gt;&lt;code&gt;publishDir&lt;/code&gt; tell &lt;code&gt;blogdown&lt;/code&gt; which directory it should place the rendered site in. This directory will include a copy of everything that gets generated in the &lt;code&gt;public/&lt;/code&gt; directory of your site’s root directory. To use the &lt;strong&gt;two repository&lt;/strong&gt; method described above, set this to &lt;code&gt;publishDir = &amp;quot;../&amp;lt;username&amp;gt;.github.io&amp;quot;&lt;/code&gt;. Adjust this path to where ever you keep your &lt;code&gt;&amp;lt;username&amp;gt;.github.io&lt;/code&gt; repository&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;public/&lt;/code&gt; - The directory where Hugo will place your rendered website content. The contents of the &lt;code&gt;public/&lt;/code&gt; directory are the only things that can be present on the &lt;code&gt;master&lt;/code&gt; branch of your &lt;em&gt;username.github.io&lt;/em&gt; page in order for GitHub to render the site properly. This creates the need to use the &lt;strong&gt;two branch&lt;/strong&gt; or &lt;strong&gt;two repository&lt;/strong&gt; approaches&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gohugo.io/themes/overview/&#34;&gt;themes/&lt;/a&gt; - User generated themes powered by the Go template library. You should see a folder with the name of the theme you chose previously
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://gohugo.io/templates/overview/&#34;&gt;themes/layout/&lt;/a&gt; - HTML templates that the Hugo theme uses to structure the layout of each page on your website. There are three primary layout types - &lt;strong&gt;single&lt;/strong&gt; (for single-content pages), &lt;strong&gt;list&lt;/strong&gt; (for pages with multiple pieces of content), and &lt;strong&gt;homepage&lt;/strong&gt; (any guesses?). Checkout this &lt;a href=&#34;http://gohugo.io/templates/go-templates/&#34;&gt;Hugo documentation&lt;/a&gt; for an intro to using and creating these layout templates&lt;br /&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;code&gt;public/&lt;/code&gt; - The directory where Hugo will place your rendered website. The contents of the &lt;code&gt;public/&lt;/code&gt; directory are the only things that can be present on the &lt;code&gt;master&lt;/code&gt; branch of your &lt;em&gt;username.github.io&lt;/em&gt; page in order for GitHub to render the site properly. More on this in a bit.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gohugo.io/content/organization/&#34;&gt;content/&lt;/a&gt; - The main directory where your blog’s content will live. Each page of your site should exist as a sub directory of &lt;code&gt;content/&lt;/code&gt;. Each sub directory will consist of either a single &lt;code&gt;index.md&lt;/code&gt; (or &lt;code&gt;index.html&lt;/code&gt;) file, or a series of files representing multiple posts of the same content type&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Once you’ve installed Hugo and created a new site, you’re ready to start customizing your site and adding content with &lt;code&gt;blogdown&lt;/code&gt;!&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;creating-new-content&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Creating New Content&lt;/h2&gt;
+&lt;p&gt;Ok, at this point we have a functioning Hugo website with a cool theme. We’ve set the &lt;code&gt;baseurl&lt;/code&gt; and &lt;code&gt;publishDir&lt;/code&gt; and given our site a &lt;code&gt;title&lt;/code&gt; and &lt;code&gt;description&lt;/code&gt;. Now it’s time to start creating content.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;blogdown&lt;/code&gt; lets you easily create new content with the aptly named &lt;code&gt;new_post()&lt;/code&gt; and &lt;code&gt;new_content()&lt;/code&gt; functions. These functions will both create a new RMarkdown or markdown file in a sub directory of &lt;code&gt;content/&lt;/code&gt; that you specify. &lt;code&gt;new_post()&lt;/code&gt; is essentially just a shortcut for &lt;code&gt;new_content(path = &#39;post/&#39;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Let’s create a new post, being sure not to include spaces or other special characters in out title.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create a new post
+new_post(title = &amp;#39;hello-world.Rmd&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Again, &lt;code&gt;blogdown&lt;/code&gt; helps us out by creating and opening the &lt;code&gt;.Rmd&lt;/code&gt; file for our new post, which it placed in the &lt;code&gt;content/post/&lt;/code&gt; directory. We could’ve specified &lt;code&gt;.md&lt;/code&gt; as the file type if we wanted to use plain markdown. The newly created file has &lt;code&gt;.yaml&lt;/code&gt; front matter, which includes the &lt;code&gt;date:&lt;/code&gt;, &lt;code&gt;draft:&lt;/code&gt;, and &lt;code&gt;title:&lt;/code&gt; fields. Another thing &lt;code&gt;blogdown&lt;/code&gt; does is to prepend the date to the file name and title. This is done to assist with &lt;a href=&#34;http://gohugo.io/content/ordering/&#34;&gt;ordering content&lt;/a&gt;, but we can remove the date from the &lt;code&gt;title:&lt;/code&gt; field as long as we keep the date in the file name and &lt;code&gt;date:&lt;/code&gt; field.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../img/new_post.png&#34; width=&#34;80%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We can now type away like any other RMarkdown document! When the site is rendered with &lt;code&gt;serve_site()&lt;/code&gt; the new &lt;code&gt;hello-world&lt;/code&gt; post will be the top entry.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../img/site_serve.png&#34; width=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;publishing-your-new-site-to-github&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Publishing Your New Site to GitHub&lt;/h2&gt;
+&lt;p&gt;Unless you’re creating this website for your eyes only, you still need to push it to GitHub before the rest of the world can read your tremendous blog entries. Don’t worry, GitHub and RStudio have some of the best people, great people, and publishing your new site is easier than, like, anything you’ve ever seen.&lt;/p&gt;
+&lt;p&gt;At this point, you either already have, or recently created, your &lt;code&gt;&amp;lt;username.github.io&amp;gt;&lt;/code&gt; repository and cloned it to your local machine. You also already told Hugo to publish your site to this same repository using the &lt;code&gt;publishDir = &amp;quot;&amp;lt;username.github.io&amp;quot;&lt;/code&gt; option in your site’s &lt;code&gt;config.toml&lt;/code&gt; file. There’s only a few steps left!&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;p&gt;Tell Hugo to build your site with &lt;code&gt;build_site()&lt;/code&gt; (no arguments required). Once Hugo finishes rendering your site, take a look at your &lt;code&gt;&amp;lt;username&amp;gt;.gihub.io&lt;/code&gt; directory, it should now contain the same files as the &lt;code&gt;public/&lt;/code&gt; directory of your source content repository.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Open up Terminal, navigate to your &lt;code&gt;&amp;lt;username&amp;gt;.gihub.io&lt;/code&gt; directory using &lt;code&gt;cd &amp;lt;path to username.github.io  repo&amp;gt;&lt;/code&gt;. Stage all changed files, commit your changes, and push your new site to GitHub.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;That’s it! Navigate to your new website &lt;code&gt;https://&amp;lt;username&amp;gt;.github.io&lt;/code&gt; and check out your hard work!&lt;/p&gt;
 &lt;/div&gt;
 
 
@@ -108,7 +154,8 @@ new_site(dir = &amp;#39;blogdown_source&amp;#39;,
 /BLOGDOWN-BODY-BEFORE --&gt;
 
 &lt;p&gt;Well, I finally did it. I started a blog.&lt;/p&gt;
-&lt;p&gt;Getting this site off the drawing board was, like a lot of things in 2016, a bit of a struggle. However, the reason for the slow launch was because, unlike 2016, there were just too many great options to choose from.&lt;/p&gt;
+&lt;p&gt;I have a variety of reasons for venturing into the blogosphere. First, I like to tell stories. Writing these stories down is a good exercise because, in verbal form, my stories have a tendency to meander off on unforeseen (thought completely necessary) tangents. Second, blogs have become a go-to for me when seeking answers to my programming-related questions so I decided to start contributing to this resource base. Finally, some really cool and innovative stories are being told via blog posts by data scientists these days. Check out David Robinson’s great piece that analyzed &lt;a href=&#34;http://varianceexplained.org/r/trump-tweets/&#34;&gt;Trump’s tweets&lt;/a&gt; and confirmed that Trump writes only the (angrier) Android half. In another cool post, Charlie Thompson recently used data from Spotify and Genius Lyrics to find &lt;a href=&#34;http://rcharlie.com/2017-02-16-fitteR-happieR/&#34;&gt;Radiohead’s most depressing song&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;With the ubiquity of data in our everyday lives, telling creative and data-driven stories is increasingly possible. With the strange political (and literal) climate situation, people are looking for ways to speak out or, occasionally, tune out. So, while it’s too early to say if this blog will follow a consistent theme, expect semi-quantitative ramblings on the environment, coding (particularly R), politics, beer, and music. Lots of music.&lt;/p&gt;
 
 
 &lt;!-- BLOGDOWN-HEAD
@@ -168,9 +215,9 @@ new_site(dir = &amp;#39;blogdown_source&amp;#39;,
 
 &lt;hr /&gt;
 
-&lt;p&gt;Costello, C., Ovando, D., Clavelle, T., Strauss, C. K., Hilborn, R., Melnychuk, M. C., &amp;hellip; &amp;amp; Rader, D. N. (2016). Global fishery prospects under contrasting management regimes. Proceedings of the National Academy of Sciences, 201520420.&lt;/p&gt;
+&lt;p&gt;Costello, C., Ovando, D., Clavelle, T., Strauss, C. K., Hilborn, R., Melnychuk, M. C., &amp;hellip; &amp;amp; Rader, D. N. (2016). &lt;a href=&#34;http://www.pnas.org/content/113/18/5125.abstract&#34;&gt;Global fishery prospects under contrasting management regimes.&lt;/a&gt; Proceedings of the National Academy of Sciences, 201520420.&lt;/p&gt;
 
-&lt;p&gt;Melnychuk, M. C., Clavelle, T., Owashi, B &amp;amp; Strauss, C. K. (2016). Re-construction of global ex-vessel prices of fished species. ICES Journal of Marine Science. doi: 10.1093/icesjms/fsw169.&lt;/p&gt;
+&lt;p&gt;Melnychuk, M. C., Clavelle, T., Owashi, B &amp;amp; Strauss, C. K. (2016). &lt;a href=&#34;https://academic.oup.com//icesjms/article/74/1/121/2670314/Reconstruction-of-global-exvessel-prices-of-fished?guestAccessKey=7f3cdd83-47fc-4a29-9466-2f8f5941a0e6&#34;&gt;Re-construction of global ex-vessel prices of fished species.&lt;/a&gt; ICES Journal of Marine Science. doi: 10.1093/icesjms/fsw169.&lt;/p&gt;
 
 &lt;h3 id=&#34;experience&#34;&gt;Experience&lt;/h3&gt;
 
@@ -182,21 +229,20 @@ new_site(dir = &amp;#39;blogdown_source&amp;#39;,
 &lt;ul&gt;
 &lt;li&gt;Serving as a multidisciplinary researcher, performing quantitative analyses and collaborating on academic
 publications and applied reports for external conservation organizations&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Using the R programming language to build and analyze environmental and economic datasets, conduct data-poor
+stock assessments, and model alternative policy options&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Building interactive web applications and automated reports for publishing and disseminating project
+results&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;Actively engaged in numerous areas of fishery science, including data limited stock assessments,
 interactions with aquaculture, spatial modeling, and bioeconomic forecasting&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;Leading SFG’s monitoring and evaluation efforts as part of the Fish Forever initiative&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;Conducted a year-long scoping project of sustainable aquaculture, securing $100,000 in research funding
 to examine environmental and economic tradeoffs between aquaculture and wild fisheries&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;Co-authored a global analysis examining the current biological status, optimal harvest trajectories, and
-economic potential of recovering the world’s fisheries (Costello &lt;em&gt;et al.&lt;/em&gt;, 2016)&lt;br /&gt;&lt;/li&gt;
+economic potential of recovering the world’s fisheries&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;Led a two day fishery workshop in the Philippines that convened local fishery scientists, government
 officials, and NGO partners to inform a modeling analysis of Filipino fisheries&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;Collaborating with Google, Oceana, and SkyTruth on the Global Fishing Watch platform to use big data
 techniques to investigate global industrial fishing effort&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;Using the R programming language to build, analyze, and visualize fishery datasets, conduct data-poor
-assessments, and model alternative policy options&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;Building interactive web applications and automated reports for publishing and disseminating project
-results&lt;br /&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;Ecosystem Service Valuation Intern&lt;/strong&gt; | The Bahamas | June 2013 – December 2013&lt;/p&gt;
@@ -237,8 +283,8 @@ juvenile lemon sharks&lt;/li&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;&lt;strong&gt;Computer Skills:&lt;/strong&gt; R/RStudio, git, GitHub, Shiny application development,
-SQL, ArcGIS, Google Earth Engine&lt;br /&gt;
+&lt;p&gt;&lt;strong&gt;Computer Skills:&lt;/strong&gt; R/RStudio, git, GitHub, Shiny application development, Google Earth Engine, JavaScript,
+SQL, GIS&lt;br /&gt;
 &lt;strong&gt;Certifications:&lt;/strong&gt; PADI Advanced SCUBA certified with 100+ dives&lt;br /&gt;
 &lt;strong&gt;Conferences:&lt;/strong&gt; 2015 SeaWeb Seafood Summit, New Orleans, LA; Aquaculture 2015: Cutting Edge Science in
 Aquaculture, Montpelier, France; 2016 Google Earth Engine User Summit, Mountainview, CA&lt;/p&gt;
