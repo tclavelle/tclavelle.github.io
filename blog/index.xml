@@ -7,8 +7,97 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2016 Tyler Clavelle</copyright>
-    <lastBuildDate>Mon, 23 Jan 2017 16:17:35 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 13 Mar 2017 18:39:07 -0700</lastBuildDate>
     <atom:link href="https://tclavelle.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Easy citations in RMarkdown with RefManageR</title>
+      <link>https://tclavelle.github.io/blog/reference_tips/</link>
+      <pubDate>Mon, 13 Mar 2017 18:39:07 -0700</pubDate>
+      
+      <guid>https://tclavelle.github.io/blog/reference_tips/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;It’s Monday (or at least it was when I started writing this), so what better way to make the week’s most boring day even more boring than to write about citations? Managing and formatting references for your research is, well, about as fun as it sounds. Fortunately, gone are the days of manually curating these lists and cut/pasting your way to an alphabetical bibliography. In this post, I’ll demonstrate how to use the &lt;a href=&#34;https://cran.r-project.org/web/packages/RefManageR/RefManageR.pdf&#34;&gt;RefManageR&lt;/a&gt; package to manage your references and easily automate citations and bibliographies in RMarkdown documents.&lt;/p&gt;
+&lt;div id=&#34;using-a-reference-manager&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Using A Reference Manager&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.zotero.org&#34;&gt;Zotero&lt;/a&gt;, &lt;a href=&#34;http://endnote.com&#34;&gt;EndNote&lt;/a&gt;, and &lt;a href=&#34;https://www.mendeley.com&#34;&gt;Mendeley&lt;/a&gt; are all excellent reference managers, each with their own variety of browser plug-ins and desktop apps that make saving, searching, and inserting references &lt;em&gt;slightly&lt;/em&gt; more enjoyable. I personally use &lt;strong&gt;Zotero&lt;/strong&gt;. I have the Safari plug in that makes it easy to save references directly to my Zotero library from journal websites. The desktop app is a convenient way to browse the references and open up PDFs when needed, and it will also retrieve the metadata for a PDF you add to it, removing the need to enter that info yourself (author, year, journal, etc.).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../img/zotero_desktop.png&#34; width=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;All reference manager platforms should allow you to export your bibliography as a variety of file types, which can subsequently be used by RMarkdown (and LaTeX and most word processors) to insert citations and a bibliography in a consistent format. I’ll be talking about &lt;code&gt;.bib&lt;/code&gt; files, which is a style-independent text-based file format (essentially just a formatted list of your references), but the same process should work for other file types.&lt;/p&gt;
+&lt;p&gt;Using &lt;code&gt;.bib&lt;/code&gt; files has numerous advantages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Easily switch between citation formats&lt;br /&gt;
+&lt;/li&gt;
+&lt;li&gt;Create and update bibliographies automatically&lt;/li&gt;
+&lt;li&gt;Compatible across platforms&lt;/li&gt;
+&lt;li&gt;Easy to share with coauthors&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;All of these benefits can take a bit of the sting out of adjusting your paper’s citations to the next journal as those rejection letters pile up. Using &lt;code&gt;.bib&lt;/code&gt; files in RMarkdown documents is really straight forward. Simply save the &lt;code&gt;.bib&lt;/code&gt; file in your directory of choice and then point to it in the front matter of your RMarkdown document:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;---
+title: &amp;quot;Crazy awesome paper that&amp;#39;s definitely getting accepted&amp;quot;
+output: html_document
+bibliography: bibliography.bib
+---&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;citations-in-rmarkdown&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Citations in RMarkdown&lt;/h4&gt;
+&lt;p&gt;We’re now ready to start inserting citations in our RMarkdown document by placing the reference id within square brackets and using the &lt;code&gt;@&lt;/code&gt; symbol, e.g, &lt;code&gt;[@costello16]&lt;/code&gt;. Check out the &lt;a href=&#34;http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html&#34;&gt;RMarkdown documentation&lt;/a&gt; for more information on inserting citations using &lt;code&gt;.bib&lt;/code&gt; (or other) bibliography files.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;citations-with-refmanager-and-zotero&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Citations with RefManageR and Zotero&lt;/h4&gt;
+&lt;p&gt;A disadvantage to using physical &lt;code&gt;.bib&lt;/code&gt; files is the need to update the &lt;code&gt;.bib&lt;/code&gt; file when you want to include new references. Fortunately, the &lt;code&gt;RefManageR&lt;/code&gt; package makes it easy for us to cut out the middle man. I’ll demonstrate how to use &lt;code&gt;RefManageR&lt;/code&gt; to interface with &lt;strong&gt;Zotero&lt;/strong&gt; directly to access our reference list.&lt;/p&gt;
+&lt;p&gt;First, we’ll load the &lt;code&gt;tidyverse&lt;/code&gt; and &lt;code&gt;RefManageR&lt;/code&gt; packages.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Packages
+library(tidyverse)
+library(RefManageR)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Next, we need two pieces of information, the first of which is a Zotero &lt;code&gt;user&lt;/code&gt; id. Your Zotero user id can be found by logging in and navigating to &lt;code&gt;Settings &amp;gt; Feeds / API&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../img/zotero_id.png&#34; width=&#34;70%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The second required piece of information is a &lt;code&gt;collection&lt;/code&gt; id. Collections are another great thing about Zotero, allowing you to easily organize your references for each paper. They appear as sub-folders that you simply drag references to from &lt;em&gt;My Library&lt;/em&gt; (Zotero will not keep a copy in &lt;em&gt;My Library&lt;/em&gt;).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../img/zotero_web.png&#34; width=&#34;100%&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;For this example, we’ll link to my collection of articles about interactions between aquaculture (fish farming) and wild fisheries. The &lt;code&gt;collection&lt;/code&gt; id is just the last character set after &lt;code&gt;collectionKey/&lt;/code&gt; at the end of the collection’s URL.&lt;/p&gt;
+&lt;p&gt;With the &lt;code&gt;user&lt;/code&gt; id and &lt;code&gt;collection&lt;/code&gt; id, we can connect to Zotero directly to get our reference information using the &lt;code&gt;ReadZotero()&lt;/code&gt; function.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;biblio &amp;lt;- ReadZotero(user = &amp;lt;user_id&amp;gt;, .params = list(collection = &amp;#39;&amp;lt;collection_id&amp;gt;&amp;#39;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;ReadZotero()&lt;/code&gt; will return a list of references, which I’ve called &lt;code&gt;biblio&lt;/code&gt; here. At this point, we can start directly inserting citations in our RMarkdown document using &lt;code&gt;Cite()&lt;/code&gt; and providing the index for the reference in &lt;code&gt;biblio&lt;/code&gt; we want to cite. For example, &lt;code&gt;Cite(biblio[[1]])&lt;/code&gt; will insert a citation for the first reference in our reference list - (Sugimoto, San Diego-McGlone, Paciencia, Milan, Tomas, Ramírez, Echavez, Gabatin, Fortes, and Nadaoka, 2016).&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ReadZotero()&lt;/code&gt; names each list index using an informative key string and we can make a look-up data frame with the reference titles and list element names to make indexing easier.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Find article keys to reference when in citations
+refs &amp;lt;- biblio %&amp;gt;% {
+  .$title
+} %&amp;gt;%
+  bind_rows() %&amp;gt;%
+  gather(key = &amp;#39;key&amp;#39;, value = &amp;#39;title&amp;#39;, 1:19)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, each time we need to insert a citation we just look up its key in our &lt;code&gt;refs&lt;/code&gt; data frame and use it with &lt;code&gt;Cite(biblio[&#39;reference_key&#39;])&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;examples&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Examples&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;China, Indonesia, India, Chile, Vietnam, and Myanmar are top-10 producers for both capture fisheries and aquaculture (FAO, 2016).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Aquaculture regulations in numerous regions tend to be reactive, with many newcomers (e.g. Myanmar and Vietnam) promoting economic development at the expense of more restrictive policies like those imposed by incumbents, such as Thailand and the Philippines (Hishamunda, Ridler, Bueno, and Yap, 2009).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In the absence of effective regulations, producers may adopt unsustainable practices that maximize their short-term profits but cause negative environmental and social damage that they are not held accountable for (Subasinghe, Soto, and Jia, 2009).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Finally, when we’re all done writing, inserting a bibliography at the end of our paper is just one line of code using the &lt;code&gt;PrintBibliography(biblio)&lt;/code&gt; function embedded in a code chunk. Be sure to set the code chunk option &lt;code&gt;results = &#39;asis&#39;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;[1] FAO, ed. &lt;em&gt;Contributing to food security and nutrition for all&lt;/em&gt;. Eng. The state of world fisheries and aquaculture 2016. OCLC: 957090850. Rome: Food and Agriculture Organization of the United Nations, 2016. ISBN: 978-92-5-109185-2.&lt;/p&gt;
+&lt;p&gt;[2] N. Hishamunda, N. B. Ridler, P. Bueno, et al. “Commercial aquaculture in Southeast Asia: Some policy lessons”. In: &lt;em&gt;Food Policy&lt;/em&gt;. Collective Action for Smallholder Market Access 34.1 (Feb. 2009), pp. 102-107. ISSN: 0306-9192. DOI: 10.1016/j.foodpol.2008.06.006. &amp;lt;URL: &lt;a href=&#34;http://www.sciencedirect.com/science/article/pii/S0306919208000584&#34; class=&#34;uri&#34;&gt;http://www.sciencedirect.com/science/article/pii/S0306919208000584&lt;/a&gt;&amp;gt;.&lt;/p&gt;
+&lt;p&gt;[3] R. Subasinghe, D. Soto and J. Jia. “Global aquaculture and its role in sustainable development”. En. In: &lt;em&gt;Reviews in Aquaculture&lt;/em&gt; 1.1 (Mar. 2009), pp. 2-9. ISSN: 1753-5131. DOI: 10.1111/j.1753-5131.2008.01002.x. &amp;lt;URL: &lt;a href=&#34;http://onlinelibrary.wiley.com/doi/10.1111/j.1753-5131.2008.01002.x/abstract&#34; class=&#34;uri&#34;&gt;http://onlinelibrary.wiley.com/doi/10.1111/j.1753-5131.2008.01002.x/abstract&lt;/a&gt;&amp;gt;.&lt;/p&gt;
+&lt;p&gt;[4] A. Sugimoto, M. L. San Diego-McGlone, F. Paciencia, et al. “Comanagement for aquaculture: Suggestions from a comparative study between two major production areas of milkfish in the Philippines”. In: &lt;em&gt;Journal of Applied Aquaculture&lt;/em&gt; 28.4 (Oct. 2016), pp. 298-313. ISSN: 1045-4438. DOI: 10.1080/10454438.2016.1209712. &amp;lt;URL: &lt;a href=&#34;http://www-tandfonline-com.proxy.library.ucsb.edu:2048/doi/full/10.1080/10454438.2016.1209712&#34; class=&#34;uri&#34;&gt;http://www-tandfonline-com.proxy.library.ucsb.edu:2048/doi/full/10.1080/10454438.2016.1209712&lt;/a&gt;&amp;gt;.&lt;/p&gt;
+&lt;p&gt;That’s it, we’re all setup and ready to start writing and citing our way to publication glory!&lt;/p&gt;
+&lt;/div&gt;
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
     
     <item>
       <title>Building a Blog with Blogdown and GitHub</title>
@@ -154,7 +243,7 @@ new_post(title = &amp;#39;hello-world.Rmd&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 /BLOGDOWN-BODY-BEFORE --&gt;
 
 &lt;p&gt;Well, I finally did it. I started a blog.&lt;/p&gt;
-&lt;p&gt;I have a variety of reasons for venturing into the blogosphere. First, I like to tell stories. Writing these stories down is a good exercise because, in verbal form, my stories have a tendency to meander off on unforeseen (thought completely necessary) tangents. Second, blogs have become a go-to for me when seeking answers to my programming-related questions so I decided to start contributing to this resource base. Finally, some really cool and innovative stories are being told via blog posts by data scientists these days. Check out David Robinson’s great piece that analyzed &lt;a href=&#34;http://varianceexplained.org/r/trump-tweets/&#34;&gt;Trump’s tweets&lt;/a&gt; and confirmed that Trump writes only the (angrier) Android half. In another cool post, Charlie Thompson recently used data from Spotify and Genius Lyrics to find &lt;a href=&#34;http://rcharlie.com/2017-02-16-fitteR-happieR/&#34;&gt;Radiohead’s most depressing song&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I have a variety of reasons for venturing into the blogosphere. First, I like to tell stories. Writing these stories down is a good exercise because, in verbal form, my stories have a tendency to meander off on unforeseen (though completely necessary) tangents. Second, blogs have become a go-to for me when seeking answers to my programming-related questions so I decided to start contributing to this resource base. Finally, some really cool and innovative stories are being told via blog posts by data scientists these days. Check out David Robinson’s great piece that analyzed &lt;a href=&#34;http://varianceexplained.org/r/trump-tweets/&#34;&gt;Trump’s tweets&lt;/a&gt; and confirmed that Trump writes only the (angrier) Android half. In another cool post, Charlie Thompson recently used data from Spotify and Genius Lyrics to find &lt;a href=&#34;http://rcharlie.com/2017-02-16-fitteR-happieR/&#34;&gt;Radiohead’s most depressing song&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;With the ubiquity of data in our everyday lives, telling creative and data-driven stories is increasingly possible. With the strange political (and literal) climate situation, people are looking for ways to speak out or, occasionally, tune out. So, while it’s too early to say if this blog will follow a consistent theme, expect semi-quantitative ramblings on the environment, coding (particularly R), politics, beer, and music. Lots of music.&lt;/p&gt;
 
 

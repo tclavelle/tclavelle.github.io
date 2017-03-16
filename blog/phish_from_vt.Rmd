@@ -1,0 +1,121 @@
+---
+date: 2017-03-06T21:00:17-08:00
+title: phish_from_vt
+draft: true
+---
+
+```{r, echo=FALSE}
+library(tidyverse)
+library(httr)
+library(stringr)
+
+client_id <- '8ec1c22eb38d4e0b9e10e8b715a5f74e'
+client_secret <- '5636a032ece24f38aad8cbd01b266ec2'
+source(file = 'scripts/spotify_helpers.R')
+```
+
+I decided to to answer this question by piggybacking off Charlie Thompson's excellent recent analysis that identified [Radiohead's most depressing song](http://rcharlie.com/2017-02-16-fitteR-happieR/). 
+```{r, eval=FALSE}
+# Find Phish's artist id info
+phish <- get_artists('Phish') %>%
+  filter(artist_name == 'Phish')
+
+# Get all albums. Need to make several calls because there are more than 50 albums
+phish_albums <- get_albums(artist_uri = phish$artist_uri) %>%
+  bind_rows(get_albums(artist_uri = phish$artist_uri, off = 50))
+
+# Studio albums to ignore
+studio <- c('The Siket Disc','The Story Of The Ghost', 'Farmhouse', 'Round Room', 'Joy', 'Fuego', 'Big Boat',
+            'Undermind', 'Junta', '(Hoist)', 'Billy Breathes', 'Rift', 'A Picture Of Nectar', 'Lawn Boy',
+            'The White Tape')
+
+# Filter to only live albums
+livephish <- filter(phish_albums, !album_name %in% studio)
+
+# Get track info
+live_tracks <- get_tracks(artist_info = phish, id = client_id, secret = client_secret, album_info = livephish)
+
+# Clean track names
+live_tracks$track_name <- gsub(pattern = ' - Live', replacement = '', live_tracks$track_name)
+live_tracks$track_name <- gsub(pattern = " [Live At Madison Square Garden, New Year's Eve 1995]", replacement = '', fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name <- gsub(pattern = " [Live In Brooklyn]", replacement = '', fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name <- gsub(pattern = " - Hampton, 1998", replacement = '', fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name <- gsub(pattern = " - Clifford Ball, 1994", replacement = '', fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name <- gsub(pattern = " [Live At Madison Square Garden]", replacement = '', fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name <- gsub(pattern = " [Live At Madison Square Garden]", replacement = '', fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name <- gsub(pattern = " [Live Version - Clifford Ball, 1994]", replacement = '', fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name <- gsub(pattern = " 1", replacement = '', fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name <- gsub(pattern = " 2", replacement = '', fixed = TRUE, live_tracks$track_name)                            
+# Save data for offline anaysis
+# write_csv(live_tracks, path = 'data/spotify_phish_tracks.csv')
+# live_tracks <- read_csv(file = 'data/spotify_phish_tracks.csv')
+
+# Convert duration from milliseconds to minutes
+live_tracks <- mutate(live_tracks, minutes = duration_ms / 1000 / 60)
+
+# find how many versions of each song
+versions <- live_tracks %>%
+  group_by(track_name) %>%
+  summarize(versions = n())
+
+live_tracks <- live_tracks %>%
+  left_join(versions)
+```
+
+## Type I & Type II Jams
+
+```{r, eval=FALSE}
+# filter out some jam classics to look at 
+live_tracks %>%
+  filter(track_name %in% c('Chalk Dust Torture', 'Down With Disease', 'David Bowie',
+                           "Simple", 'Tweezer','Crosseyed And Painless', 'Bathtub Gin',
+                           'Stash', 'Twist')) %>%
+  ggplot(aes(x = minutes, fill = track_name)) +
+  geom_density(alpha = 0.6) +
+  scale_fill_brewer(palette = 'Set1') +
+  facet_wrap(~track_name, scales = 'free_y')
+
+```
+
+```{r, eval=FALSE}
+# filter out some jam classics to look at 
+live_tracks %>%
+  filter(versions > 14) %>%
+  select(track_name, danceability, valence, instrumentalness, energy, speechiness) %>%
+  gather(key = 'metric', value = 'value', 2:7) %>%
+  ggplot(aes(x = track_name, y = value, fill = metric)) +
+  geom_boxplot() +
+  coord_flip() +
+  facet_wrap(~metric, scales = 'free_x')
+
+```
+
+
+```{r, eval=FALSE}
+# filter out some examples of crazy outlier jams
+live_tracks %>%
+  filter(track_name %in% c('Funky Bitch', 'Carini', 'Tube', 'Ghost', 'Free')) %>%
+  ggplot(aes(x = minutes, fill = track_name)) +
+  geom_density(alpha = 0.6) +
+  scale_fill_brewer(palette = 'Set1') +
+  facet_wrap(~track_name, scales = 'free_y')
+
+```
+
+
+```{r, eval=FALSE}
+test <- get_playlist(user_id = '1265043326', playlist_id = '3FdZNyZ42vMB5szof9EA3N', id = client_id, secret = client_secret)
+```
+
+
+
+```{r, eval=FALSE}
+# Average length line plot
+live_tracks %>%
+  filter(track_name %in% c("Mike's Song", "Tweezer", "Simple")) %>%
+  group_by(track_name, album_release_year) %>%
+  summarize(avg_length = mean(minutes, na.rm = T)) %>%
+  ggplot(aes(x = album_release_year, y = avg_length, color = track_name)) +
+  geom_line()
+```
+

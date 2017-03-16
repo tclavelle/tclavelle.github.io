@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>phish_from_vt</title>
+<meta name="description" content="Describe your website">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+<link rel="stylesheet" href="../../css/font-awesome.min.css">
+<link rel="stylesheet" href="../../css/owl.carousel.css">
+<link rel="stylesheet" href="../../css/owl.theme.css">
+
+
+  <link href="../../css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
+
+
+<link href="../../css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="../../img/favicon.png">
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-93040290-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+</head>
+<body>
+  <div id="all">
+      <div class="container-fluid">
+          <div class="row row-offcanvas row-offcanvas-left">
+              <div id="sidebar" class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+  <div class="sidebar-content">
+    <h1 class="sidebar-heading"><a href="../../">Tyler Clavelle</a></h1>
+    
+      <p class="sidebar-p">My name is Tyler Clavelle and i'm an environmental data scientist interested in using data analysis and visualization to elucidate the diverse ecological, economic, and social challenges facing our planet. I work as a Project Researcher for the Sustainable Fisheries Group at the University of California, Santa Barbara.</p>
+    
+    <ul class="sidebar-menu">
+      
+      
+        <li><a href="../../">Home</a></li>
+      
+        <li><a href="../../about/">About</a></li>
+      
+        <li><a href="../../blog/">Blog</a></li>
+      
+        <li><a href="../../contact/">Get in touch</a></li>
+      
+    </ul>
+    <p class="social">
+  
+  
+  
+  <a href="https://twitter.com/TylerSaville" data-animate-hover="pulse" class="external twitter">
+    <i class="fa fa-twitter"></i>
+  </a>
+  
+  
+  
+  <a href="mailto:tyler.clavelle@gmail.com" data-animate-hover="pulse" class="email">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  <a href="https://linkedin.com/in/tyler-clavelle-b9902716" data-animate-hover="pulse">
+    <i class="fa fa-linkedin"></i>
+  </a>
+  
+  
+  
+  <a href="https://github.com/tclavelle" data-animate-hover="pulse">
+    <i class="fa fa-github"></i>
+  </a>
+  
+</p>
+
+
+    <div class="copyright">
+      <p class="credit">
+        
+          &copy;2016 Tyler Clavelle
+        
+        | Template by <a href="https://bootstrapious.com/free-templates" class="external">Bootstrapious.com</a>
+
+&amp; ported to Hugo by <a href="https://github.com/kishaningithub">Kishan B</a>
+
+      </p>
+    </div>
+  </div>
+</div>
+
+              
+<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
+  <div class="small-navbar visible-xs">
+  <button type="button" data-toggle="offcanvas" class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
+  <h1 class="small-navbar-heading"><a href="../../">Tyler Clavelle</a></h1>
+</div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="content-column-content">
+         <h1>phish_from_vt</h1>
+
+
+<pre><code>## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr</code></pre>
+<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
+<pre><code>## filter(): dplyr, stats
+## lag():    dplyr, stats</code></pre>
+<pre><code>## Loading required package: methods</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     date</code></pre>
+<p>I decided to to answer this question by piggybacking off Charlie Thompson’s excellent recent analysis that identified <a href="http://rcharlie.com/2017-02-16-fitteR-happieR/">Radiohead’s most depressing song</a>.</p>
+<pre class="r"><code># Find Phish&#39;s artist id info
+phish &lt;- get_artists(&#39;Phish&#39;) %&gt;%
+  filter(artist_name == &#39;Phish&#39;)
+
+# Get all albums. Need to make several calls because there are more than 50 albums
+phish_albums &lt;- get_albums(artist_uri = phish$artist_uri) %&gt;%
+  bind_rows(get_albums(artist_uri = phish$artist_uri, off = 50))
+
+# Studio albums to ignore
+studio &lt;- c(&#39;The Siket Disc&#39;,&#39;The Story Of The Ghost&#39;, &#39;Farmhouse&#39;, &#39;Round Room&#39;, &#39;Joy&#39;, &#39;Fuego&#39;, &#39;Big Boat&#39;,
+            &#39;Undermind&#39;, &#39;Junta&#39;, &#39;(Hoist)&#39;, &#39;Billy Breathes&#39;, &#39;Rift&#39;, &#39;A Picture Of Nectar&#39;, &#39;Lawn Boy&#39;,
+            &#39;The White Tape&#39;)
+
+# Filter to only live albums
+livephish &lt;- filter(phish_albums, !album_name %in% studio)
+
+# Get track info
+live_tracks &lt;- get_tracks(artist_info = phish, id = client_id, secret = client_secret, album_info = livephish)
+
+# Clean track names
+live_tracks$track_name &lt;- gsub(pattern = &#39; - Live&#39;, replacement = &#39;&#39;, live_tracks$track_name)
+live_tracks$track_name &lt;- gsub(pattern = &quot; [Live At Madison Square Garden, New Year&#39;s Eve 1995]&quot;, replacement = &#39;&#39;, fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name &lt;- gsub(pattern = &quot; [Live In Brooklyn]&quot;, replacement = &#39;&#39;, fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name &lt;- gsub(pattern = &quot; - Hampton, 1998&quot;, replacement = &#39;&#39;, fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name &lt;- gsub(pattern = &quot; - Clifford Ball, 1994&quot;, replacement = &#39;&#39;, fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name &lt;- gsub(pattern = &quot; [Live At Madison Square Garden]&quot;, replacement = &#39;&#39;, fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name &lt;- gsub(pattern = &quot; [Live At Madison Square Garden]&quot;, replacement = &#39;&#39;, fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name &lt;- gsub(pattern = &quot; [Live Version - Clifford Ball, 1994]&quot;, replacement = &#39;&#39;, fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name &lt;- gsub(pattern = &quot; 1&quot;, replacement = &#39;&#39;, fixed = TRUE, live_tracks$track_name)
+live_tracks$track_name &lt;- gsub(pattern = &quot; 2&quot;, replacement = &#39;&#39;, fixed = TRUE, live_tracks$track_name)                            
+# Save data for offline anaysis
+# write_csv(live_tracks, path = &#39;data/spotify_phish_tracks.csv&#39;)
+# live_tracks &lt;- read_csv(file = &#39;data/spotify_phish_tracks.csv&#39;)
+
+# Convert duration from milliseconds to minutes
+live_tracks &lt;- mutate(live_tracks, minutes = duration_ms / 1000 / 60)
+
+# find how many versions of each song
+versions &lt;- live_tracks %&gt;%
+  group_by(track_name) %&gt;%
+  summarize(versions = n())
+
+live_tracks &lt;- live_tracks %&gt;%
+  left_join(versions)</code></pre>
+<div id="type-i-type-ii-jams" class="section level2">
+<h2>Type I &amp; Type II Jams</h2>
+<pre class="r"><code># filter out some jam classics to look at 
+live_tracks %&gt;%
+  filter(track_name %in% c(&#39;Chalk Dust Torture&#39;, &#39;Down With Disease&#39;, &#39;David Bowie&#39;,
+                           &quot;Simple&quot;, &#39;Tweezer&#39;,&#39;Crosseyed And Painless&#39;, &#39;Bathtub Gin&#39;,
+                           &#39;Stash&#39;, &#39;Twist&#39;)) %&gt;%
+  ggplot(aes(x = minutes, fill = track_name)) +
+  geom_density(alpha = 0.6) +
+  scale_fill_brewer(palette = &#39;Set1&#39;) +
+  facet_wrap(~track_name, scales = &#39;free_y&#39;)</code></pre>
+<pre class="r"><code># filter out some jam classics to look at 
+live_tracks %&gt;%
+  filter(versions &gt; 14) %&gt;%
+  select(track_name, danceability, valence, instrumentalness, energy, speechiness) %&gt;%
+  gather(key = &#39;metric&#39;, value = &#39;value&#39;, 2:7) %&gt;%
+  ggplot(aes(x = track_name, y = value, fill = metric)) +
+  geom_boxplot() +
+  coord_flip() +
+  facet_wrap(~metric, scales = &#39;free_x&#39;)</code></pre>
+<pre class="r"><code># filter out some examples of crazy outlier jams
+live_tracks %&gt;%
+  filter(track_name %in% c(&#39;Funky Bitch&#39;, &#39;Carini&#39;, &#39;Tube&#39;, &#39;Ghost&#39;, &#39;Free&#39;)) %&gt;%
+  ggplot(aes(x = minutes, fill = track_name)) +
+  geom_density(alpha = 0.6) +
+  scale_fill_brewer(palette = &#39;Set1&#39;) +
+  facet_wrap(~track_name, scales = &#39;free_y&#39;)</code></pre>
+<pre class="r"><code>test &lt;- get_playlist(user_id = &#39;1265043326&#39;, playlist_id = &#39;3FdZNyZ42vMB5szof9EA3N&#39;, id = client_id, secret = client_secret)</code></pre>
+<pre class="r"><code># Average length line plot
+live_tracks %&gt;%
+  filter(track_name %in% c(&quot;Mike&#39;s Song&quot;, &quot;Tweezer&quot;, &quot;Simple&quot;)) %&gt;%
+  group_by(track_name, album_release_year) %&gt;%
+  summarize(avg_length = mean(minutes, na.rm = T)) %&gt;%
+  ggplot(aes(x = album_release_year, y = avg_length, color = track_name)) +
+  geom_line()</code></pre>
+</div>
+
+
+
+         <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'tclavelle-blog';
+    var disqus_identifier = '\/blog\/phish_from_vt\/';
+    var disqus_title = 'phish_from_vt';
+    var disqus_url = '\/blog\/phish_from_vt\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+      </div>
+  </div>
+  <script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/jquery.cookie.js"> </script>
+<script src="../../js/ekko-lightbox.js"></script>
+<script src="../../js/jquery.scrollTo.min.js"></script>
+<script src="../../js/masonry.pkgd.min.js"></script>
+<script src="../../js/imagesloaded.pkgd.min.js"></script>
+<script src="../../js/owl.carousel.min.js"></script>
+<script src="../../js/front.js"></script>
+
+</body>
+</html>
