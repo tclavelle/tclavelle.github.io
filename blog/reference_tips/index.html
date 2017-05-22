@@ -28,10 +28,6 @@ ga('send', 'pageview');
 </script>
 <script async src='//www.google-analytics.com/analytics.js'></script>
 
-
-
-
-
 </head>
 <body>
   <div id="all">
@@ -108,9 +104,7 @@ ga('send', 'pageview');
     <div class="col-lg-8">
       <div class="content-column-content">
          <h1>Easy citations in RMarkdown with RefManageR</h1>
-
-
-<p>It’s Monday (or at least it was when I started writing this), so what better way to make the week’s most boring day even more boring than to write about citations? Managing and formatting references for your research is, well, about as fun as it sounds. Fortunately, gone are the days of manually curating these lists and cut/pasting your way to an alphabetical bibliography. In this post, I’ll demonstrate how to use the <a href="https://cran.r-project.org/web/packages/RefManageR/RefManageR.pdf">RefManageR</a> package to manage your references and easily automate citations and bibliographies in RMarkdown documents.</p>
+         <p>It’s Monday (or at least it was when I started writing this), so what better way to make the week’s most boring day even more boring than to write about citations? Managing and formatting references for your research is, well, about as fun as it sounds. Fortunately, gone are the days of manually curating these lists and cut/pasting your way to an alphabetical bibliography. In this post, I’ll demonstrate how to use the <a href="https://cran.r-project.org/web/packages/RefManageR/RefManageR.pdf">RefManageR</a> package to manage your references and easily automate citations and bibliographies in RMarkdown documents.</p>
 <div id="using-a-reference-manager" class="section level4">
 <h4>Using A Reference Manager</h4>
 <p><a href="https://www.zotero.org">Zotero</a>, <a href="http://endnote.com">EndNote</a>, and <a href="https://www.mendeley.com">Mendeley</a> are all excellent reference managers, each with their own variety of browser plug-ins and desktop apps that make saving, searching, and inserting references <em>slightly</em> more enjoyable. I personally use <strong>Zotero</strong>. I have the Safari plug in that makes it easy to save references directly to my Zotero library from journal websites. The desktop app is a convenient way to browse the references and open up PDFs when needed, and it will also retrieve the metadata for a PDF you add to it, removing the need to enter that info yourself (author, year, journal, etc.).</p>
@@ -173,13 +167,11 @@ refs &lt;- biblio %&gt;% {
 <p>Finally, when we’re all done writing, inserting a bibliography at the end of our paper is just one line of code using the <code>PrintBibliography(biblio)</code> function embedded in a code chunk. Be sure to set the code chunk option <code>results = 'asis'</code>.</p>
 <p><strong>References</strong></p>
 <p>[1] FAO, ed. <em>Contributing to food security and nutrition for all</em>. Eng. The state of world fisheries and aquaculture 2016. OCLC: 957090850. Rome: Food and Agriculture Organization of the United Nations, 2016. ISBN: 978-92-5-109185-2.</p>
-<p>[2] N. Hishamunda, N. B. Ridler, P. Bueno, et al. “Commercial aquaculture in Southeast Asia: Some policy lessons”. In: <em>Food Policy</em>. Collective Action for Smallholder Market Access 34.1 (Feb. 2009), pp. 102-107. ISSN: 0306-9192. DOI: 10.1016/j.foodpol.2008.06.006. &lt;URL: <a href="http://www.sciencedirect.com/science/article/pii/S0306919208000584" class="uri">http://www.sciencedirect.com/science/article/pii/S0306919208000584</a>&gt;.</p>
-<p>[3] R. Subasinghe, D. Soto and J. Jia. “Global aquaculture and its role in sustainable development”. En. In: <em>Reviews in Aquaculture</em> 1.1 (Mar. 2009), pp. 2-9. ISSN: 1753-5131. DOI: 10.1111/j.1753-5131.2008.01002.x. &lt;URL: <a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1753-5131.2008.01002.x/abstract" class="uri">http://onlinelibrary.wiley.com/doi/10.1111/j.1753-5131.2008.01002.x/abstract</a>&gt;.</p>
-<p>[4] A. Sugimoto, M. L. San Diego-McGlone, F. Paciencia, et al. “Comanagement for aquaculture: Suggestions from a comparative study between two major production areas of milkfish in the Philippines”. In: <em>Journal of Applied Aquaculture</em> 28.4 (Oct. 2016), pp. 298-313. ISSN: 1045-4438. DOI: 10.1080/10454438.2016.1209712. &lt;URL: <a href="http://www-tandfonline-com.proxy.library.ucsb.edu:2048/doi/full/10.1080/10454438.2016.1209712" class="uri">http://www-tandfonline-com.proxy.library.ucsb.edu:2048/doi/full/10.1080/10454438.2016.1209712</a>&gt;.</p>
+<p>[2] N. Hishamunda, N. B. Ridler, P. Bueno, et al. “Commercial aquaculture in Southeast Asia: Some policy lessons”. In: <em>Food Policy</em>. Collective Action for Smallholder Market Access 34.1 (Feb. 2009), pp. 102-107. ISSN: 0306-9192. DOI: 10.1016/j.foodpol.2008.06.006. &lt;URL: <a href="http://www.sciencedirect.com/science/article/pii/S0306919208000584" class="uri">http://www.sciencedirect.com/science/article/pii/S0306919208000584</a>&gt; (visited on 09/16/2016).</p>
+<p>[3] R. Subasinghe, D. Soto and J. Jia. “Global aquaculture and its role in sustainable development”. En. In: <em>Reviews in Aquaculture</em> 1.1 (Mar. 2009), pp. 2-9. ISSN: 1753-5131. DOI: 10.1111/j.1753-5131.2008.01002.x. &lt;URL: <a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1753-5131.2008.01002.x/abstract" class="uri">http://onlinelibrary.wiley.com/doi/10.1111/j.1753-5131.2008.01002.x/abstract</a>&gt; (visited on 09/16/2016).</p>
+<p>[4] A. Sugimoto, M. L. San Diego-McGlone, F. Paciencia, et al. “Comanagement for aquaculture: Suggestions from a comparative study between two major production areas of milkfish in the Philippines”. In: <em>Journal of Applied Aquaculture</em> 28.4 (Oct. 2016), pp. 298-313. ISSN: 1045-4438. DOI: 10.1080/10454438.2016.1209712. &lt;URL: <a href="http://www-tandfonline-com.proxy.library.ucsb.edu:2048/doi/full/10.1080/10454438.2016.1209712" class="uri">http://www-tandfonline-com.proxy.library.ucsb.edu:2048/doi/full/10.1080/10454438.2016.1209712</a>&gt; (visited on 02/15/2017).</p>
 <p>That’s it, we’re all setup and ready to start writing and citing our way to publication glory!</p>
 </div>
-
-
 
          <div id="disqus_thread"></div>
 <script type="text/javascript">
