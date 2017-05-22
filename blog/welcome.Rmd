@@ -3,7 +3,7 @@ date: 2017-01-20T18:32:56-08:00
 title: "Welcome"
 author: Tyler Clavelle
 type: "post"
-draft: false
+showonlyimage: true
 image: "blog/img/TyTy_Diving_Conch.jpg"
 ---
 
