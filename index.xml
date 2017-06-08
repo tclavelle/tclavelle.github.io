@@ -113,6 +113,15 @@
     </item>
     
     <item>
+      <title>Using R to extract data from web APIs</title>
+      <link>https://tclavelle.github.io/blog/r_and_apis/</link>
+      <pubDate>Mon, 05 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://tclavelle.github.io/blog/r_and_apis/</guid>
+      <description>Overview We all know the feeling; You find the perfect data set only to discover it’s held hostage in 30 pages of a PDF formatted by a drunk toddler or in 467.5 Excel worksheets spread across 19 workbooks emailed to you by a guy named Melvin. If you’re lucky, maybe there’s an online data platform where you can query some mythical database and download individual data files…One. At. A. Time. In a perfect world, however, all the data you’re nerdy heart could desire is freely accessible via an Application Programming Interface (API).</description>
+    </item>
+    
+    <item>
       <title>Phish by the Numbers</title>
       <link>https://tclavelle.github.io/blog/phish_from_vt/</link>
       <pubDate>Sun, 21 May 2017 00:00:00 +0000</pubDate>

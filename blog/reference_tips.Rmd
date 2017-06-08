@@ -3,6 +3,7 @@ date: 2017-03-13T18:39:07-07:00
 title: "Easy citations in RMarkdown with RefManageR"
 image: "blog/img/references_post1.jpg"
 type: 'post'
+showonlyimage: true
 ---
 
 It's Monday (or at least it was when I started writing this), so what better way to make the week's most boring day even more boring than to write about citations? Managing and formatting references for your research is, well, about as fun as it sounds. Fortunately, gone are the days of manually curating these lists and cut/pasting your way to an alphabetical bibliography. In this post, I'll demonstrate how to use the [RefManageR](https://cran.r-project.org/web/packages/RefManageR/RefManageR.pdf) package to manage your references and easily automate citations and bibliographies in RMarkdown documents.
