@@ -90,18 +90,18 @@ get_tracks <- function(artist_info, album_info, id, secret) {
 }
 
 # ### Phish.net helper functions
-# # API and user keys
-# api_key <- 'B53003FE66383F8D79E7'
-# app_key <- '0A3D9E14542B42F37A5E'
-# 
-# # API endpoint
-# end_point <- 'https://api.phish.net/v3/'
-# 
-# # Get table of all jamcharts
-# jc_all <- GET(paste0(end_point,'jamcharts/all?apikey=',api_key)) %>% content 
+# API and user keys
+api_key <- 'B53003FE66383F8D79E7'
+app_key <- '0A3D9E14542B42F37A5E'
+
+# API endpoint
+end_point <- 'https://api.phish.net/v3/'
+
+# Get table of all jamcharts
+# jc_all <- GET(paste0(end_point,'jamcharts/all?apikey=',api_key)) %>% content
 # jc_all <- jc_all$response[2]$data
-# 
-# # Convert response to data frame
+
+# Convert response to data frame
 # jc_all <- map_df(seq_len(length(jc_all)), function(x) {
 #   list(song = jc_all[[x]]$song,
 #        songid = jc_all[[x]]$songid,

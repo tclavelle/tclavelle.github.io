@@ -1,0 +1,79 @@
+---
+title: "About Me"
+layout: 'single'
+---
+
+***
+### Education
+***
+**Bren School of Environmental Science & Management** – University of California, Santa Barbara (UCSB)  
+**Master of Environmental Science and Management (MESM)** | June 2014  
+**Coastal Marine Resources Management Specialization**  
+    
+  
+**Bucknell University** – Lewisburg, PA  
+**Bachelor of Arts with a double major in Economics and Biology**, *cum laude* | May 2009  
+
+### Publications
+***
+Costello, C., Ovando, D., Clavelle, T., Strauss, C. K., Hilborn, R., Melnychuk, M. C., ... & Rader, D. N. (2016). [Global fishery prospects under contrasting management regimes.](http://www.pnas.org/content/113/18/5125.abstract) Proceedings of the National Academy of Sciences, 201520420.  
+
+Melnychuk, M. C., Clavelle, T., Owashi, B & Strauss, C. K. (2016). [Re-construction of global ex-vessel prices of fished species.](https://academic.oup.com//icesjms/article/74/1/121/2670314/Reconstruction-of-global-exvessel-prices-of-fished?guestAccessKey=7f3cdd83-47fc-4a29-9466-2f8f5941a0e6) ICES Journal of Marine Science. doi: 10.1093/icesjms/fsw169.  
+
+### Experience
+***
+**Sustainable Fisheries Group (SFG)** | Santa Barbara, CA | June 2013 - Present   
+**Project Researcher** | July 2014 – Present
+    
+  + Serving as a multidisciplinary researcher, performing quantitative analyses and collaborating on academic
+  publications and applied reports for external conservation organizations  
+  + Using the R programming language to build and analyze environmental and economic datasets, conduct data-poor
+  stock assessments, and model alternative policy options  
+  + Building interactive web applications and automated reports for publishing and disseminating project
+  results  
+  + Actively engaged in numerous areas of fishery science, including data limited stock assessments,
+  interactions with aquaculture, spatial modeling, and bioeconomic forecasting  
+  + Conducted a year-long scoping project of sustainable aquaculture, securing $100,000 in research funding
+  to examine environmental and economic tradeoffs between aquaculture and wild fisheries  
+  + Co-authored a global analysis examining the current biological status, optimal harvest trajectories, and
+  economic potential of recovering the world’s fisheries  
+  + Led a two day fishery workshop in the Philippines that convened local fishery scientists, government
+  officials, and NGO partners to inform a modeling analysis of Filipino fisheries  
+  + Collaborating with Google, Oceana, and SkyTruth on the Global Fishing Watch platform to use big data
+  techniques to investigate global industrial fishing effort  
+
+**Ecosystem Service Valuation Intern** | The Bahamas | June 2013 – December 2013
+  
+  + Conducted an economic valuation of marine ecosystem services in support of the successful declaration
+  of two marine protected areas (MPAs) in The Bahamas.
+  + Used GIS to identify, map, and quantify the areas of five marine habitat types within proposed
+  boundaries
+  + Interviewed local stakeholders and policy makers regarding their use and opinions of MPAs
+  + Produced a policy-relevant report presenting the valuation results and discussing the relative ecological
+  and economic significance of the proposed protected areas
+  + Served as a reviewer and contributed on-the-ground feedback for the World Resources Institute’s Coastal
+  Capital: Ecosystem Valuation for Decision Making in the Caribbean guidebook  
+  
+**Bimini Biological Field Station (BBFS)** | The Bahamas | January 2010 – November 2011  
+**Assistant Manager** | June 2010 – November 2011 
+
++ Helped plan, organize, and supervise daily fieldwork operations of a remote shark research facility
++ Trained and supervised 70+ field assistants and 100+ university students in marine field research
+techniques
++ Guided daily tours educating the public on BBFS research and the importance of marine stewardship
++ Assisted logistical planning and on-site operations for a 10-day research cruise aboard a NOAA vessel
++ Managed, updated, and improved the BBFS website  
+
+**Marine Research Intern** | January 2010 – June 2010
+
++ Conducted field work (50 hours per week) for a project evaluating the effects of nursery habitat loss on
+juvenile lemon sharks
+
+### Skills, Certifications & and Affiliations
+***
+**Computer Skills:** R/RStudio, git, GitHub, Shiny application development, Google Earth Engine, JavaScript,
+SQL, GIS   
+**Certifications:** PADI Advanced SCUBA certified with 100+ dives  
+**Conferences:** 2015 SeaWeb Seafood Summit, New Orleans, LA; Aquaculture 2015: Cutting Edge Science in
+Aquaculture, Montpelier, France; 2016 Google Earth Engine User Summit, Mountainview, CA 
+***

@@ -234,6 +234,20 @@ jams %>%
        x    = 'Length (min)',
        y    = 'Frequency') +
   theme_bw()
+
+jams %>%
+  filter(song %in% 'Lawn Boy') %>%
+  left_join(top_song_summary) %>%
+  mutate(is_type_2 = length >= type_2) %>%
+  ggplot(aes(x = length)) +
+  geom_histogram(binwidth = 0.5) +
+  
+  geom_vline(data = filter(top_song_summary, song %in% 'Lawn Boy'),
+             aes(xintercept = avg_length),
+             linetype = 2) +
+  labs(x    = 'Length (min)',
+       y    = 'Frequency') +
+  theme_bw()
 ```
 
 Distinguishing type-1 and type-2 jams is more clear for certain songs than others. The clearest example is the dual peaks to the distribution for Ghost, where a version safely enters type-2 territory after 16 minutes. For other songs, like Bowie and Tweezer, the line between type-1 and type-2 is less clear, and for beloved classics like Reba and You Enjoy Myself you can usually count on surrendering to the flow for around 13 and 18 minutes, respectively (Table 1). Regardless, rest assured that, as each minute passed, you were increasingly likely to be witnessing something special. Also, don't freak out if that Tweezer you were so stoked to catch bails out after only a few minutes, you may be in store for a highly recommended segue-fest. Lastly, if you witness the boys break the 30 minute mark, congratulations; don't let your jaw break when it hit's the floor.
