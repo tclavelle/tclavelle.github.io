@@ -1,0 +1,85 @@
+# Site settings
+baseurl = "https://tclavelle.github.io/"
+title = "Tyler Clavelle"
+theme = "hugo-split-theme-master"
+languageCode = "en-us"
+# Enable comments by entering your Disqus shortname
+disqusShortname = "tclavelle-blog"
+# Enable Google Analytics by entering your tracking code
+googleAnalytics = "UA-93040290-1"
+publishDir = "../tclavelle.github.io"
+disableKinds = ["page", "section", "taxonomy", "taxonomyTerm", "RSS", "sitemap", "robotsTXT"]
+
+[params]
+
+  # Metadata for search engines and social sharing
+  name = "Tyler Clavelle"
+  description = "Personal GitHub site of Tyler Clavelle"
+  shareImage = "head_shot.jpg"
+  twitterHandle = "tclavL"
+
+  # Favicon
+  favicon = "favicon.ico"
+
+  # Copyright
+  copyright = "&copy;2019 Tyler Clavelle"
+
+  # Section - Content
+  [params.content]
+    name = "Tyler Clavelle"
+    tagline =  "Scientist. Data Nerd. Music Geek."
+    bio = "I'm just another ecologist posing as a data scientist, or maybe it's the othe way around these days. My blog has moved! Visit [tylerclavelle.com](https://www.tylerclavelle.com)"
+    redirect = "My blog has moved! Visit [tylerclavelle.com](https://www.tylerclavelle.com)"
+
+  # Section - Visual
+  [params.visual]
+
+    # Image
+    [params.visual.image]
+      enable = true
+      file = "/img/TyTy_Diving_Conch.jpg"
+      position = "center center"
+
+    # Video
+    [params.visual.video]
+      enable = false
+      mute = true
+      file = "videos/background.mp4"
+      # youtubeId = "dk9uNWPP7EA"
+
+  # Links
+  #
+  # Links List #1
+  [[params.links]]
+    [params.links.list1]
+      heading = "Connect"
+
+      [[params.links.list1.link]]
+        text = "Blog"
+        url = "https://www.tylerclavelle.com"
+
+      [[params.links.list1.link]]
+        text = "Email"
+        url = "tyler.clavelle@gmail.com"
+      
+      [[params.links.list1.link]]
+        text = "GitHub"
+        url = "https://linkedin.com/in/tyler-clavelle-b9902716"
+
+  # Links List #2
+  [[params.links]]
+    [params.links.list2]
+      heading = "Social"
+
+      [[params.links.list2.link]]
+        text = "Twitter"
+        url = "https://twitter.com/tclavL"
+        
+      [[params.links.list2.link]]
+        text = "LinkedIn"
+        url = "https://linkedin.com/in/tyler-clavelle-b9902716"
+        
+  # The original template is released under the Creative Commons Attribution 3.0 License.
+  # Please keep the original attribution link when using for your own project.
+  # If you'd like to use the template without the attribution, you can check out
+  # the license option via the template author's website: https://onepagelove.com/split
